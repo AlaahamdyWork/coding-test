@@ -33,8 +33,8 @@ Start the development server using `php artisan serve` and go to http://127.0.0.
 3- the artisan command to list recently registered users 
 - php artisan list:registered_users
 
-4- to test sending email is working local I used mailtrap
-and updated MAIL variables in .env
+4- to test sending email locally I used mailtrap
+and updated MAIL variables in the .env file
 
 
 
