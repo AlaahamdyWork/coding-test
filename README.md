@@ -1,8 +1,8 @@
 # Laravel Coding Test
 
-You should have been told which set of tasks to complete. If not please let your contact know.
-
-Feel free to do both sets if you want. 
+I did the backend task
+for the frontend now the address lookup component is accessible
+but for the styling i found it's already styled using bootstrap
 
 ## Backend
 
@@ -17,3 +17,25 @@ Start the development server using `php artisan serve` and go to http://127.0.0.
 
 1. Make the address lookup component accessible
 2. Style it using bootstrap
+
+
+## Instrucitons to Run Project
+
+1- create .env from .env.example and update your database configurations
+- DB_USERNAME=your username
+- DB_PASSWORD= yout password
+
+2- run this commands 
+- composer install
+- php artisan migrate
+- npm install
+
+3- the artisan command to list recently registered users 
+- php artisan list:registered_users
+
+4- to test sending email is working local I used mailtrap
+and updated MAIL variables in .env
+
+
+
+

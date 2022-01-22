@@ -45,10 +45,10 @@ class Handler extends ExceptionHandler
      *
      * @param Request $request
      * @param \Throwable $exception
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      * @throws Throwable
      */
-    public function render($request, Throwable $exception): Response
+    public function render($request, Throwable $exception): \Symfony\Component\HttpFoundation\Response
     {
         return parent::render($request, $exception);
     }

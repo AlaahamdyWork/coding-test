@@ -5,6 +5,11 @@
     <ul v-show="addresses.length > 0 && show" class="list-group">
       <li v-for="address in addresses" class="list-group-item" @click="select(address)">{{ address.line_1 }}</li>
     </ul>
+<!--    <div v-show="selectedAddress">
+      {{selectedAddress.line_1}}
+      {{selectedAddress.line_2}}
+      {{selectedAddress.line_3}}
+    </div>-->
   </div>
 </template>
 
@@ -16,7 +21,8 @@ export default {
   data: function () {
     return {
       addresses: [],
-      show: false
+      show: false,
+      /*selectedAddress:false,*/
     }
   },
   methods: {
@@ -24,6 +30,7 @@ export default {
       fetch('https://addresses.iamproperty.com/postcodes/' + postcode + '/addresses')
       .then(r => r.json())
       .then(j => {
+          console.log('jjjj',j.result);
         this.show = true
         this.addresses = j.result
       })
@@ -31,6 +38,7 @@ export default {
     select(v) {
       this.show = false
       this.$emit('select', v)
+       /* this.selectedAddress=v;*/
     }
   },
   components: {

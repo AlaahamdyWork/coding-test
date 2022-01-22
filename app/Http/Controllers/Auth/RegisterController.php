@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\User;
-use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
+use App\Rules\Postcode;
 
 class RegisterController extends Controller
 {
@@ -21,14 +20,12 @@ class RegisterController extends Controller
     |
     */
 
-    use RegistersUsers;
-
     /**
      * Where to redirect users after registration.
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/address';
 
     /**
      * Create a new controller instance.
@@ -40,18 +37,29 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    public function create()
+    {
+        return view('registration.create');
+    }
+
     /**
      * Get a validator for an incoming registration request.
      *
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
+    protected function validator()
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        return $this->validate(request(), [
+            'name' => 'required|max:255|string',
+            'email' => 'required|email|unique:users|max:255',
+            'password' => 'required|confirmed|min:8|string',
+            'postcode' => 'required',
+            'postcode' => [
+                'required',
+                'string',
+                new Postcode()
+            ]
         ]);
     }
 
@@ -61,12 +69,21 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-    protected function create(array $data)
+    protected function store()
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        $this->validator();
+
+        $user = User::create(request(['name', 'email', 'password' , 'postcode']));
+
+        $this->sendEmail($user);
+
+        return redirect()->to('/address');
+
+    }
+
+    protected function sendEmail($user){
+        if($user){
+            Mail::to($user->email)->send(new \App\Mail\RegisterWelcomeMail($user));
+        }
     }
 }
