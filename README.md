@@ -29,6 +29,7 @@ Start the development server using `php artisan serve` and go to http://127.0.0.
 - composer install
 - php artisan migrate
 - npm install
+- npm run development
 
 3- the artisan command to list recently registered users 
 - php artisan list:registered_users

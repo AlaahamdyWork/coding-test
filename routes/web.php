@@ -11,17 +11,13 @@
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('welcome');
-});
+});*/
 
 Route::get('/address', function () {
     return view('address');
 });
 
-/*Route::get('/register', function () {
-    return view('registration.create');
-});*/
-
-Route::get('/register',[\App\Http\Controllers\Auth\RegisterController::class, 'create']);
+Route::get('/',[\App\Http\Controllers\Auth\RegisterController::class, 'create']);
 Route::post('register', [\App\Http\Controllers\Auth\RegisterController::class, 'store']);
